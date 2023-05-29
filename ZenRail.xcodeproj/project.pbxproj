@@ -14,6 +14,8 @@
 		892EFF072A1E138800D5E811 /* UIHexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EFF062A1E138800D5E811 /* UIHexColor.swift */; };
 		892EFF092A1E28B200D5E811 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EFF082A1E28B200D5E811 /* CustomTabBar.swift */; };
 		892EFF0B2A1F48AF00D5E811 /* AddToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EFF0A2A1F48AF00D5E811 /* AddToDoViewController.swift */; };
+		892EFF0F2A247EFF00D5E811 /* BGMCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EFF0D2A247EFF00D5E811 /* BGMCell.swift */; };
+		892EFF102A247EFF00D5E811 /* BGMCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 892EFF0E2A247EFF00D5E811 /* BGMCell.xib */; };
 		895503582A19FE7500C61A49 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895503572A19FE7500C61A49 /* AppDelegate.swift */; };
 		8955035A2A19FE7500C61A49 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895503592A19FE7500C61A49 /* SceneDelegate.swift */; };
 		8955035C2A19FE7500C61A49 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8955035B2A19FE7500C61A49 /* ViewController.swift */; };
@@ -30,6 +32,8 @@
 		892EFF062A1E138800D5E811 /* UIHexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHexColor.swift; sourceTree = "<group>"; };
 		892EFF082A1E28B200D5E811 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		892EFF0A2A1F48AF00D5E811 /* AddToDoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToDoViewController.swift; sourceTree = "<group>"; };
+		892EFF0D2A247EFF00D5E811 /* BGMCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMCell.swift; sourceTree = "<group>"; };
+		892EFF0E2A247EFF00D5E811 /* BGMCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BGMCell.xib; sourceTree = "<group>"; };
 		895503542A19FE7500C61A49 /* ZenRail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZenRail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		895503572A19FE7500C61A49 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		895503592A19FE7500C61A49 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +77,22 @@
 			path = Style;
 			sourceTree = "<group>";
 		};
+		892EFF0C2A247ECB00D5E811 /* xib */ = {
+			isa = PBXGroup;
+			children = (
+				892EFF0E2A247EFF00D5E811 /* BGMCell.xib */,
+			);
+			path = xib;
+			sourceTree = "<group>";
+		};
+		892EFF112A247F0A00D5E811 /* CustomClass */ = {
+			isa = PBXGroup;
+			children = (
+				892EFF0D2A247EFF00D5E811 /* BGMCell.swift */,
+			);
+			path = CustomClass;
+			sourceTree = "<group>";
+		};
 		8955034B2A19FE7500C61A49 = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +112,8 @@
 		895503562A19FE7500C61A49 /* ZenRail */ = {
 			isa = PBXGroup;
 			children = (
+				892EFF112A247F0A00D5E811 /* CustomClass */,
+				892EFF0C2A247ECB00D5E811 /* xib */,
 				892EFF052A1E135F00D5E811 /* Style */,
 				892EFF042A1E0AFF00D5E811 /* ViewController */,
 				895503572A19FE7500C61A49 /* AppDelegate.swift */,
@@ -163,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				895503642A19FE7600C61A49 /* LaunchScreen.storyboard in Resources */,
+				892EFF102A247EFF00D5E811 /* BGMCell.xib in Resources */,
 				895503612A19FE7600C61A49 /* Assets.xcassets in Resources */,
 				8955035F2A19FE7500C61A49 /* Main.storyboard in Resources */,
 			);
@@ -181,6 +204,7 @@
 				892EFF012A1E076200D5E811 /* SelectBGMViewController.swift in Sources */,
 				8955035C2A19FE7500C61A49 /* ViewController.swift in Sources */,
 				892EFF092A1E28B200D5E811 /* CustomTabBar.swift in Sources */,
+				892EFF0F2A247EFF00D5E811 /* BGMCell.swift in Sources */,
 				892EFEFF2A1E05A300D5E811 /* MeditationViewController.swift in Sources */,
 				892EFF072A1E138800D5E811 /* UIHexColor.swift in Sources */,
 				895503582A19FE7500C61A49 /* AppDelegate.swift in Sources */,

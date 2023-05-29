@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import AVFoundation
+
+var soundPlayer: AVAudioPlayer!
+
 
 class MeditationViewController: UIViewController {
     
@@ -13,12 +17,15 @@ class MeditationViewController: UIViewController {
     @IBOutlet var forwardButton: UIButton!
     @IBOutlet var stepLabel: UILabel!
     @IBOutlet var headlineLabel: UILabel!
-    @IBOutlet var BGMLabel: UILabel!
+    @IBOutlet var bgmLabel: UILabel!
+    @IBOutlet var bgmTimeLabel: UILabel!
+    @IBOutlet var bgmDurationLabel: UILabel!
     @IBOutlet var discriptionTextView: UITextView!
     @IBOutlet var pageView: UIView!
     @IBOutlet var backgroundImageView: UIImageView!
-    @IBOutlet var indicaterView: UIView!
-    
+    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var progressView: UIProgressView!
+        
     var index: Int = 0
     var views: [UIView] = []
     
@@ -51,10 +58,12 @@ class MeditationViewController: UIViewController {
         let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = pageView.frame
-        blurEffectView.frame.size.height = pageView.frame.height - 93
+        blurEffectView.center = pageView.center
+        //        blurEffectView.frame.size.height = pageView.frame.height - 93
         blurEffectView.layer.cornerRadius = 24
         blurEffectView.clipsToBounds = true
-        backgroundImageView.addSubview(blurEffectView)
+        scrollView.addSubview(blurEffectView)
+        scrollView.bringSubviewToFront(pageView)
         
         pageView.layer.borderWidth = 1.0
         pageView.layer.borderColor = UIColor(hex: "3C6255").cgColor
@@ -69,9 +78,11 @@ class MeditationViewController: UIViewController {
         
         createIndicaterView()
         indicater()
+        
+        setupBGM(fileName: "somehow")
     }
     
-
+    
     @IBAction func tappedForwardButton() {
         index += 1
         if index >= headlines.count - 1 {
@@ -103,16 +114,16 @@ class MeditationViewController: UIViewController {
     }
     
     func createIndicaterView() {
-        let pageViewCenterX = CGFloat((self.view.frame.width - 40) / 2)
-        let pageViewCenterY = CGFloat(pageView.frame.minY + 100)
-        let initialViewX = CGFloat(pageViewCenterX - 105)
+        let pageViewCenterX = CGFloat((scrollView.frame.width) / 2)
+        let pageViewCenterY = CGFloat(pageView.frame.minY)
+        let initialViewX = CGFloat(pageViewCenterX - 105 - 12.5)
         for i in 0...6 {
-            let view = UIView(frame: CGRect(x: initialViewX + CGFloat(35 * i), y: pageViewCenterY - 20, width: 25, height: 3))
+            let view = UIView(frame: CGRect(x: initialViewX + CGFloat(35 * i), y: pageViewCenterY + 20, width: 25, height: 3))
             view.backgroundColor = UIColor.white
             view.layer.cornerRadius = 1.5
             view.clipsToBounds = true
             views.append(view)
-            self.view.addSubview(view)
+            self.scrollView.addSubview(view)
         }
     }
     
@@ -126,5 +137,35 @@ class MeditationViewController: UIViewController {
             }
         }
     }
-
+    
+    func setupBGM(fileName: String) {
+        
+        do {
+            soundPlayer = try! AVAudioPlayer(data: NSDataAsset(name: fileName)!.data)
+            print("done!")
+        } catch let error as NSError {
+            print(error)
+        }
+        
+        bgmDurationLabel.text = convertSecond(second: soundPlayer.duration)
+        soundPlayer.currentTime = 0
+        soundPlayer.play()
+        let soundTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: {(time: Timer) in
+            
+            if soundPlayer.isPlaying {
+                self.progressView.progress = Float(soundPlayer.currentTime) / Float(soundPlayer.duration)
+                self.bgmTimeLabel.text = self.convertSecond(second: soundPlayer.currentTime)
+            } else {
+                soundPlayer.currentTime = 0
+                soundPlayer.play()
+            }
+        })
+        print(soundTimer.isValid)
+    }
+    
+    func convertSecond(second: TimeInterval) -> String {
+        let intSecond = Int(second)
+        let StringTime = intSecond % 60 < 10 ? "\(intSecond / 60):0\(intSecond % 60)" : "\(intSecond / 60):\(intSecond % 60)"
+        return StringTime
+    }
 }
