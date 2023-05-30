@@ -115,9 +115,10 @@ class MeditationViewController: UIViewController {
     
     @IBAction func tappedMusicListButton() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let selectBGMViewController = storyboard.instantiateViewController(identifier: "SelectBGMViewController")
+        let selectBGMViewController = storyboard.instantiateViewController(identifier: "SelectBGMViewController") as! SelectBGMViewController
         selectBGMViewController.modalPresentationStyle = .formSheet
         selectBGMViewController.presentationController?.delegate = self
+        selectBGMViewController.bgmDelegate = self
         present(selectBGMViewController, animated: true, completion: nil)
     }
     
