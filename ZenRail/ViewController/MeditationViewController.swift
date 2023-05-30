@@ -78,9 +78,8 @@ class MeditationViewController: UIViewController {
         
         createIndicaterView()
         indicater()
-        
-        setupBGM(fileName: "somehow")
     }
+    
     
     
     @IBAction func tappedForwardButton() {
@@ -113,6 +112,14 @@ class MeditationViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    @IBAction func tappedMusicListButton() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let selectBGMViewController = storyboard.instantiateViewController(identifier: "SelectBGMViewController")
+        selectBGMViewController.modalPresentationStyle = .formSheet
+        selectBGMViewController.presentationController?.delegate = self
+        present(selectBGMViewController, animated: true, completion: nil)
+    }
+    
     func createIndicaterView() {
         let pageViewCenterX = CGFloat((scrollView.frame.width) / 2)
         let pageViewCenterY = CGFloat(pageView.frame.minY)
@@ -138,18 +145,30 @@ class MeditationViewController: UIViewController {
         }
     }
     
-    func setupBGM(fileName: String) {
+    func setupBGM() {
         
-        do {
-            soundPlayer = try! AVAudioPlayer(data: NSDataAsset(name: fileName)!.data)
-            print("done!")
-        } catch let error as NSError {
-            print(error)
+//        do {
+//            soundPlayer = try! AVAudioPlayer(data: NSDataAsset(name: fileName)!.data)
+//            print("done!")
+//        } catch let error as NSError {
+//            print(error)
+//        }
+        guard let player = soundPlayer else {
+            print("soundPlayer is nil")
+            return
         }
         
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let selectBGMViewController = storyboard.instantiateViewController(withIdentifier: "SelectBGMViewController") as! SelectBGMViewController
+        
+        if let playingBgm = selectBGMViewController.playingBgm {
+            bgmLabel.text = playingBgm
+        } else {
+            print("selectBGMView?.playingBgm is nil")
+        }
         bgmDurationLabel.text = convertSecond(second: soundPlayer.duration)
-        soundPlayer.currentTime = 0
-        soundPlayer.play()
+//        soundPlayer.currentTime = 0
+//        soundPlayer.play()
         let soundTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: {(time: Timer) in
             
             if soundPlayer.isPlaying {
@@ -160,12 +179,17 @@ class MeditationViewController: UIViewController {
                 soundPlayer.play()
             }
         })
-        print(soundTimer.isValid)
     }
     
     func convertSecond(second: TimeInterval) -> String {
         let intSecond = Int(second)
         let StringTime = intSecond % 60 < 10 ? "\(intSecond / 60):0\(intSecond % 60)" : "\(intSecond / 60):\(intSecond % 60)"
         return StringTime
+    }
+}
+
+extension MeditationViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        setupBGM()
     }
 }

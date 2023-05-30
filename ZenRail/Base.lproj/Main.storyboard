@@ -76,7 +76,7 @@
         <!--Meditation View Controller-->
         <scene sceneID="6a2-Zn-IRi">
             <objects>
-                <viewController id="7co-fo-h1h" customClass="MeditationViewController" customModule="ZenRail" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MeditationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7co-fo-h1h" customClass="MeditationViewController" customModule="ZenRail" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TdK-nM-H8L">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -113,7 +113,7 @@
                                     <backgroundConfiguration key="background" image="music.note.list" catalog="system"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <segue destination="LLR-PL-Fao" kind="presentation" id="KgH-GC-BKU"/>
+                                    <action selector="tappedMusicListButton" destination="7co-fo-h1h" eventType="touchUpInside" id="rA3-Hn-woL"/>
                                 </connections>
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TdV-aw-peI">
@@ -325,13 +325,13 @@
         <!--SelectBGM View Controller-->
         <scene sceneID="uCy-e2-3lc">
             <objects>
-                <viewController id="LLR-PL-Fao" customClass="SelectBGMViewController" customModule="ZenRail" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SelectBGMViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LLR-PL-Fao" customClass="SelectBGMViewController" customModule="ZenRail" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3lZ-1c-x9e">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nmf-ai-7hD">
-                                <rect key="frame" x="20" y="20" width="30" height="30"/>
+                                <rect key="frame" x="20" y="79" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="IOp-ZM-8S5"/>
                                     <constraint firstAttribute="width" constant="30" id="dmt-Qq-osK"/>
@@ -348,13 +348,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BGMを選択" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wa3-0V-aHy">
-                                <rect key="frame" x="123.33333333333333" y="50" width="146.33333333333337" height="33.666666666666657"/>
+                                <rect key="frame" x="123.33333333333333" y="109" width="146.33333333333337" height="33.666666666666657"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PIS-UI-LwO">
-                                <rect key="frame" x="30" y="103.66666666666669" width="333" height="688.33333333333326"/>
+                                <rect key="frame" x="30" y="162.66666666666669" width="333" height="605.33333333333326"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>

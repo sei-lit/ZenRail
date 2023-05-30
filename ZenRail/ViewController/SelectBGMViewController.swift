@@ -22,6 +22,8 @@ class SelectBGMViewController: UIViewController {
         "painted from memory"
     ]
     
+    var playingBgm: String?
+    
 //    let bgmCell = BGMCell()
 //    let cellDelegate = SelectBGMViewController()
     
@@ -41,9 +43,13 @@ class SelectBGMViewController: UIViewController {
     }
     
     @IBAction func tappedBackButton() {
-        dismiss(animated: true)
+        if let presentationController = presentationController {
+            presentationController.delegate?.presentationControllerDidDismiss?(presentationController)
+        }
+        print("dismissされていないよ")
+        self.dismiss(animated: true,completion: nil)
     }
-    
+
 }
 
 extension SelectBGMViewController: UITableViewDelegate, UITableViewDataSource {
@@ -60,9 +66,11 @@ extension SelectBGMViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "bgmCell", for: indexPath) as! BGMCell
-        cell.playButton.setImage(UIImage(systemName: "pause.circle"), for: .normal)
-
+        
+        playingBgm = bgmtitles[indexPath.row]
+        print(playingBgm)
     }
 }
 

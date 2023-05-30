@@ -49,9 +49,6 @@
                         <buttonConfiguration key="configuration" style="plain">
                             <backgroundConfiguration key="background"/>
                         </buttonConfiguration>
-                        <connections>
-                            <action selector="tappedPlayButton" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lTP-PH-ErP"/>
-                        </connections>
                     </button>
                 </subviews>
                 <constraints>

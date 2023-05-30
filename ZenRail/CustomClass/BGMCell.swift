@@ -20,8 +20,17 @@ class BGMCell: UITableViewCell {
     @IBOutlet var waveImageView: UIImageView!
     @IBOutlet var chekmarkImageView: UIImageView!
     @IBOutlet var bgmLabel: UILabel!
-    
+        
 //    var delegate: bgmCellDelegate? = nil
+    
+    let bgmtitles = [
+        "New Morning" : "new_morning",
+        "Somehow" : "somehow",
+        "曇った宝石" : "fog_up_gem",
+        "青空空港" : "blue_sky_airport",
+        "Cecilia" : "cecilia",
+        "painted from memory" : "painted_from_memory"
+    ]
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,12 +41,35 @@ class BGMCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
+        
+        if selected {
+            playButton.setImage(UIImage(systemName: "pause.circle"), for: .normal)
+            waveImageView.isHidden = false
+            chekmarkImageView.isHidden = false
+            playBgm(title: bgmLabel.text ?? "New Morning")
+
+        } else {
+            playButton.setImage(UIImage(systemName: "play.circle"), for: .normal)
+            waveImageView.isHidden = true
+            chekmarkImageView.isHidden = true
+        }
+        
     }
     
-    @IBAction func tappedPlayButton(sender: IndexPath) {
-        playButton.setImage(UIImage(systemName: "pause.circle"), for: .normal)
+    func playBgm(title: String) {
+        soundPlayer = try! AVAudioPlayer(data: NSDataAsset(name: bgmtitles[title]!)!.data)
+        soundPlayer.currentTime = 0
+        soundPlayer.play()
+        
+//        print(title)
+//        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+//        let meditationViewController = storyboard.instantiateViewController(identifier: "MeditationViewController") as! MeditationViewController
+//        meditationViewController.playingBgm = title
     }
+    
+//    @IBAction func tappedPlayButton() {
+//        playButton.setImage(UIImage(systemName: "pause.circle"), for: .normal)
+//    }
     
 //    func pauseImage() {
 //        if let dg = self.delegate {
