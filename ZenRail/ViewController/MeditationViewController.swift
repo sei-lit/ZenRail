@@ -28,6 +28,7 @@ class MeditationViewController: UIViewController {
         
     var index: Int = 0
     var views: [UIView] = []
+    var playingBgm: String!
     
     let headlines = [
         "心地よい姿勢を取る",
@@ -147,28 +148,17 @@ class MeditationViewController: UIViewController {
     
     func setupBGM() {
         
-//        do {
-//            soundPlayer = try! AVAudioPlayer(data: NSDataAsset(name: fileName)!.data)
-//            print("done!")
-//        } catch let error as NSError {
-//            print(error)
-//        }
+        print("setupBGM")
+        
         guard let player = soundPlayer else {
             print("soundPlayer is nil")
             return
         }
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let selectBGMViewController = storyboard.instantiateViewController(withIdentifier: "SelectBGMViewController") as! SelectBGMViewController
+        print(playingBgm)
+        bgmLabel.text = playingBgm
         
-        if let playingBgm = selectBGMViewController.playingBgm {
-            bgmLabel.text = playingBgm
-        } else {
-            print("selectBGMView?.playingBgm is nil")
-        }
         bgmDurationLabel.text = convertSecond(second: soundPlayer.duration)
-//        soundPlayer.currentTime = 0
-//        soundPlayer.play()
         let soundTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: {(time: Timer) in
             
             if soundPlayer.isPlaying {
@@ -188,8 +178,17 @@ class MeditationViewController: UIViewController {
     }
 }
 
+extension MeditationViewController: BGMDelegate {
+    func gettingBgmTitle(title: String) {
+        print("gettingBgmTitle")
+        self.playingBgm = title
+        print("playingBgm is " + playingBgm)
+    }
+}
+
 extension MeditationViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        print("presentationControllerDidDismiss")
         setupBGM()
     }
 }

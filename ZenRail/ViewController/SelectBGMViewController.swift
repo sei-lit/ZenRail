@@ -23,9 +23,12 @@ class SelectBGMViewController: UIViewController {
     ]
     
     var playingBgm: String?
+    var bgmDelegate: BGMDelegate?
     
+    let meditationViewController = MeditationViewController()
 //    let bgmCell = BGMCell()
 //    let cellDelegate = SelectBGMViewController()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +38,7 @@ class SelectBGMViewController: UIViewController {
         backButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 10), forImageIn: .normal)
         
 //        bgmCell.delegate = cellDelegate
+        bgmDelegate = meditationViewController
         
         bgmTableView.dataSource = self
         bgmTableView.delegate = self
@@ -44,9 +48,10 @@ class SelectBGMViewController: UIViewController {
     
     @IBAction func tappedBackButton() {
         if let presentationController = presentationController {
+            bgmDelegate?.gettingBgmTitle(title: playingBgm ?? "未設定")
             presentationController.delegate?.presentationControllerDidDismiss?(presentationController)
         }
-        print("dismissされていないよ")
+        print("dismiss")
         self.dismiss(animated: true,completion: nil)
     }
 
@@ -66,9 +71,6 @@ extension SelectBGMViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "bgmCell", for: indexPath) as! BGMCell
-        
         playingBgm = bgmtitles[indexPath.row]
         print(playingBgm)
     }
