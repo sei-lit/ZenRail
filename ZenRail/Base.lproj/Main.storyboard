@@ -401,6 +401,9 @@
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </backgroundConfiguration>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="tappedBackButton" destination="0Rk-kI-WSq" eventType="touchUpInside" id="94x-K1-AED"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="降車駅を選択" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jzq-4s-W3H">
                                 <rect key="frame" x="111.33333333333333" y="100" width="170.33333333333337" height="33.666666666666657"/>
@@ -413,7 +416,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="gEX-kh-ZNn">
-                                <rect key="frame" x="0.0" y="154" width="393" height="56"/>
+                                <rect key="frame" x="0.0" y="153.66666666666666" width="393" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="0Rk-kI-WSq" id="FM8-Sx-bq2"/>
