@@ -463,19 +463,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HId-jT-4o3">
                                 <rect key="frame" x="0.0" y="139" width="393" height="729"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1Pc-2l-ff5">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1Pc-2l-ff5">
                                         <rect key="frame" x="30" y="50" width="333" height="629"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="ndw-va-Oa4">
-                                                <rect key="frame" x="0.0" y="50" width="333" height="43.666667938232422"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ndw-va-Oa4" id="Fb1-aS-jz3">
-                                                    <rect key="frame" x="0.0" y="0.0" width="333" height="43.666667938232422"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </tableViewCellContentView>
-                                            </tableViewCell>
-                                        </prototypes>
                                     </tableView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8G-Hz-wee">
                                         <rect key="frame" x="343" y="30" width="20" height="20"/>
@@ -489,7 +479,7 @@
                                             <backgroundConfiguration key="background" image="plus" catalog="system"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <segue destination="bQF-i6-t07" kind="presentation" id="r9T-Tz-DK6"/>
+                                            <action selector="tappedToAddButton" destination="wPX-QK-3RT" eventType="touchUpInside" id="Jc1-eC-8lF"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -521,6 +511,9 @@
                             <constraint firstItem="gcs-jX-MGW" firstAttribute="top" secondItem="2ff-dM-XuM" secondAttribute="top" constant="20" id="rKa-HW-JHN"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="toDoTableView" destination="1Pc-2l-ff5" id="FYw-u7-9zB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nL5-hk-53G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -529,34 +522,76 @@
         <!--Add To Do View Controller-->
         <scene sceneID="Aac-To-1rR">
             <objects>
-                <viewController id="bQF-i6-t07" customClass="AddToDoViewController" customModule="ZenRail" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddToDoViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bQF-i6-t07" customClass="AddToDoViewController" customModule="ZenRail" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jSH-CZ-S1j">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="781-cz-jwM">
-                                <rect key="frame" x="30" y="50" width="30" height="30"/>
+                                <rect key="frame" x="30" y="109" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="D8j-L5-bUk"/>
                                     <constraint firstAttribute="height" constant="30" id="cGu-qH-hjR"/>
                                 </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" cornerStyle="capsule">
                                     <backgroundConfiguration key="background">
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </backgroundConfiguration>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="tappedBackButton" destination="bQF-i6-t07" eventType="touchUpInside" id="afp-Hd-HZB"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新しいToDoを追加" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MEA-RN-0ba">
+                                <rect key="frame" x="104.66666666666667" y="109" width="183.66666666666663" height="26.333333333333343"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="新しいToDo…" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rot-Ma-mG5">
+                                <rect key="frame" x="71.666666666666686" y="185.33333333333334" width="250" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="FrT-Oo-mEt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T4M-bp-ucz">
+                                <rect key="frame" x="121.66666666666669" y="269.33333333333331" width="150" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="KQv-mR-4Bd"/>
+                                    <constraint firstAttribute="width" constant="150" id="p0v-Lu-3o2"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="追加">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" red="0.23529411764705882" green="0.38431372549019605" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                                    </backgroundConfiguration>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="tappedAddButton" destination="bQF-i6-t07" eventType="touchUpInside" id="W2X-yK-GLj"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Xb-o1-f6r"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="781-cz-jwM" firstAttribute="leading" secondItem="6Xb-o1-f6r" secondAttribute="leading" constant="30" id="Agk-CL-0kD"/>
+                            <constraint firstItem="T4M-bp-ucz" firstAttribute="centerX" secondItem="jSH-CZ-S1j" secondAttribute="centerX" id="B7Y-eX-Kf1"/>
+                            <constraint firstItem="MEA-RN-0ba" firstAttribute="top" secondItem="6Xb-o1-f6r" secondAttribute="top" constant="50" id="KQQ-fW-Oxf"/>
+                            <constraint firstItem="MEA-RN-0ba" firstAttribute="centerX" secondItem="jSH-CZ-S1j" secondAttribute="centerX" id="UC7-9P-Gvx"/>
+                            <constraint firstItem="rot-Ma-mG5" firstAttribute="centerX" secondItem="jSH-CZ-S1j" secondAttribute="centerX" id="g2O-9B-7pG"/>
+                            <constraint firstItem="rot-Ma-mG5" firstAttribute="top" secondItem="MEA-RN-0ba" secondAttribute="bottom" constant="50" id="hah-Bq-QqR"/>
                             <constraint firstItem="781-cz-jwM" firstAttribute="top" secondItem="6Xb-o1-f6r" secondAttribute="top" constant="50" id="i2F-38-aTh"/>
+                            <constraint firstItem="T4M-bp-ucz" firstAttribute="top" secondItem="rot-Ma-mG5" secondAttribute="bottom" constant="50" id="iPS-oJ-tZ9"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="781-cz-jwM" id="jeF-Jo-8LX"/>
+                        <outlet property="taskTextField" destination="rot-Ma-mG5" id="cgU-v2-u8a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mAP-dK-u6p" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

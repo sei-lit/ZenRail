@@ -9,9 +9,23 @@ import UIKit
 
 class ToDoViewController: UIViewController {
 
+    @IBOutlet var toDoTableView: UITableView!
+    
+    var tasks: [[String]] = [
+        ["コア機能開発", "レポート"],
+        ["洗濯物干し", "トイレ掃除"]
+    ]
+    
+    var toDoDelegate: ToDoDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        toDoTableView.dataSource = self
+        toDoTableView.delegate = self
+        toDoTableView.register(UINib(nibName: "ToDoTableViewCell", bundle: nil), forCellReuseIdentifier: "toDoCell")
+        
         createTabBar(x: CGFloat(view.frame.width / 2), y: CGFloat(view.frame.height / 10 * 9), width: 320, height: 50)
     }
     
@@ -60,6 +74,14 @@ class ToDoViewController: UIViewController {
         
     }
     
+    @IBAction func tappedToAddButton() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let AddToDoViewController = storyboard.instantiateViewController(identifier: "AddToDoViewController") as! AddToDoViewController
+        AddToDoViewController.modalPresentationStyle = .formSheet
+        AddToDoViewController.toDoDelegate = self
+        present(AddToDoViewController, animated: true, completion: nil)
+    }
+    
 
     /*
     // MARK: - Navigation
@@ -71,4 +93,71 @@ class ToDoViewController: UIViewController {
     }
     */
 
+}
+
+extension ToDoViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return tasks.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tasks[section].count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCell", for: indexPath) as! ToDoTableViewCell
+        
+        toDoDelegate = cell
+        cell.toDoDelegate = self
+        cell.taskLabel.text = tasks[indexPath.section][indexPath.row]
+        
+        if indexPath.section == 1 {
+            toDoDelegate?.getIsDone(isDone: true)
+        } else {
+            toDoDelegate?.getIsDone(isDone: false)
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "取組中"
+        } else {
+            return "完了"
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            if indexPath.section == 0 {
+                tasks[0].remove(at: indexPath.row)
+            } else {
+                tasks[1].remove(at: indexPath.row)
+            }
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+}
+
+extension ToDoViewController: ToDoDelegate {
+    func addNewToDo(taskName: String) {
+        tasks[0].append(taskName)
+        toDoTableView.reloadData()
+    }
+    
+    func getIsDone(isDone: Bool) {
+        return
+    }
+    
+    func switchSection(task: String, isDone: Bool) {
+        if isDone {
+            tasks[1].removeAll(where: {$0 == task})
+            tasks[0].append(task)
+            toDoTableView.reloadData()
+        } else {
+            tasks[0].removeAll(where: {$0 == task})
+            tasks[1].append(task)
+            toDoTableView.reloadData()
+        }
+    }
 }

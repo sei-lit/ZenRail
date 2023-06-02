@@ -17,6 +17,9 @@
 		892EFF0F2A247EFF00D5E811 /* BGMCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EFF0D2A247EFF00D5E811 /* BGMCell.swift */; };
 		892EFF102A247EFF00D5E811 /* BGMCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 892EFF0E2A247EFF00D5E811 /* BGMCell.xib */; };
 		892EFF142A25DD9600D5E811 /* BGMDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EFF132A25DD9600D5E811 /* BGMDelegate.swift */; };
+		892EFF242A2887B800D5E811 /* ToDoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EFF222A2887B800D5E811 /* ToDoTableViewCell.swift */; };
+		892EFF252A2887B800D5E811 /* ToDoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 892EFF232A2887B800D5E811 /* ToDoTableViewCell.xib */; };
+		892EFF272A2893E000D5E811 /* ToDoDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EFF262A2893E000D5E811 /* ToDoDelegate.swift */; };
 		895503582A19FE7500C61A49 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895503572A19FE7500C61A49 /* AppDelegate.swift */; };
 		8955035A2A19FE7500C61A49 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895503592A19FE7500C61A49 /* SceneDelegate.swift */; };
 		8955035C2A19FE7500C61A49 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8955035B2A19FE7500C61A49 /* ViewController.swift */; };
@@ -36,6 +39,9 @@
 		892EFF0D2A247EFF00D5E811 /* BGMCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMCell.swift; sourceTree = "<group>"; };
 		892EFF0E2A247EFF00D5E811 /* BGMCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BGMCell.xib; sourceTree = "<group>"; };
 		892EFF132A25DD9600D5E811 /* BGMDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMDelegate.swift; sourceTree = "<group>"; };
+		892EFF222A2887B800D5E811 /* ToDoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewCell.swift; sourceTree = "<group>"; };
+		892EFF232A2887B800D5E811 /* ToDoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToDoTableViewCell.xib; sourceTree = "<group>"; };
+		892EFF262A2893E000D5E811 /* ToDoDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoDelegate.swift; sourceTree = "<group>"; };
 		895503542A19FE7500C61A49 /* ZenRail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZenRail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		895503572A19FE7500C61A49 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		895503592A19FE7500C61A49 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +88,7 @@
 		892EFF0C2A247ECB00D5E811 /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				892EFF232A2887B800D5E811 /* ToDoTableViewCell.xib */,
 				892EFF0E2A247EFF00D5E811 /* BGMCell.xib */,
 			);
 			path = xib;
@@ -91,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				892EFF0D2A247EFF00D5E811 /* BGMCell.swift */,
+				892EFF222A2887B800D5E811 /* ToDoTableViewCell.swift */,
 			);
 			path = CustomClass;
 			sourceTree = "<group>";
@@ -99,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				892EFF132A25DD9600D5E811 /* BGMDelegate.swift */,
+				892EFF262A2893E000D5E811 /* ToDoDelegate.swift */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -196,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				895503642A19FE7600C61A49 /* LaunchScreen.storyboard in Resources */,
+				892EFF252A2887B800D5E811 /* ToDoTableViewCell.xib in Resources */,
 				892EFF102A247EFF00D5E811 /* BGMCell.xib in Resources */,
 				895503612A19FE7600C61A49 /* Assets.xcassets in Resources */,
 				8955035F2A19FE7500C61A49 /* Main.storyboard in Resources */,
@@ -213,7 +223,9 @@
 				892EFF032A1E077A00D5E811 /* SelectDestinationViewController.swift in Sources */,
 				892EFF0B2A1F48AF00D5E811 /* AddToDoViewController.swift in Sources */,
 				892EFF012A1E076200D5E811 /* SelectBGMViewController.swift in Sources */,
+				892EFF272A2893E000D5E811 /* ToDoDelegate.swift in Sources */,
 				8955035C2A19FE7500C61A49 /* ViewController.swift in Sources */,
+				892EFF242A2887B800D5E811 /* ToDoTableViewCell.swift in Sources */,
 				892EFF092A1E28B200D5E811 /* CustomTabBar.swift in Sources */,
 				892EFF0F2A247EFF00D5E811 /* BGMCell.swift in Sources */,
 				892EFEFF2A1E05A300D5E811 /* MeditationViewController.swift in Sources */,
