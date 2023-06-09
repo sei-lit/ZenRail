@@ -7,13 +7,23 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 
 class SelectDestinationViewController: UIViewController {
     
     @IBOutlet var backButton: UIButton!
+    @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet var tableView: UITableView!
     
     var locationManager: CLLocationManager!
     var didStartUpdatingLocation: Bool = false
+    var destination: String = ""
+    var searchCompleter = MKLocalSearchCompleter()
+    var currentLocation: CLLocationCoordinate2D?
+    let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+
+    
+    let pointOfInterestFilter = MKPointOfInterestFilter(including: [.publicTransport])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,11 +32,32 @@ class SelectDestinationViewController: UIViewController {
         backButton.setImage(UIImage(systemName: "xmark"), for: .normal)
         backButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 10), forImageIn: .normal)
         
+        searchBar.delegate = self
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UINib(nibName: "DestinationTableViewCell", bundle: nil), forCellReuseIdentifier: "destinationCell")
+        
+        searchCompleter.delegate = self
+        searchCompleter.pointOfInterestFilter = pointOfInterestFilter
+        searchCompleter.resultTypes = .pointOfInterest
+        
         setupCoreLocation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         initLocation(locationManager)
+        
+        
+    }
+    
+    func getStationData() {
+        let baseUrl = "https://express.heartrails.com/api/json?method=getStations"
+        var stationName = searchBar.text
+        
+        
+        
+        let stationUrl = "&name=" + stationName!
     }
     
     func initLocation(_ manager: CLLocationManager) {
@@ -76,7 +107,11 @@ class SelectDestinationViewController: UIViewController {
     }
     
     func updateMap(currentLocation: CLLocation){
-           print("Location:\(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
+        print("Location:\(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
+
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude), span: span)
+
+        searchCompleter.region = region
     }
     
     @IBAction func tappedBackButton() {
@@ -108,4 +143,46 @@ extension SelectDestinationViewController: CLLocationManagerDelegate {
                showPermissionAlert()
            }
        }
+}
+
+extension SelectDestinationViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+        
+        if let station = searchBar.text {
+            searchCompleter.queryFragment = station
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if let station = searchBar.text {
+            searchCompleter.queryFragment = station
+        }
+    }
+}
+
+extension SelectDestinationViewController: MKLocalSearchCompleterDelegate {
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        tableView.reloadData()
+    }
+    
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+        print("searchCompleter didn't work because: ", error)
+    }
+}
+
+extension SelectDestinationViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return searchCompleter.results.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "destinationCell") as! DestinationTableViewCell
+        let completion = searchCompleter.results[indexPath.row]
+        cell.destinationLabel.text = completion.title
+        
+        return cell
+    }
+    
+    
 }

@@ -422,8 +422,8 @@
                                     <outlet property="delegate" destination="0Rk-kI-WSq" id="FM8-Sx-bq2"/>
                                 </connections>
                             </searchBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="よく使う駅" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKh-1M-u7n">
-                                <rect key="frame" x="30" y="229.66666666666666" width="87" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="検索結果" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKh-1M-u7n">
+                                <rect key="frame" x="30" y="229.66666666666666" width="70" height="21"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -449,6 +449,8 @@
                     </view>
                     <connections>
                         <outlet property="backButton" destination="fyh-L1-a6T" id="oZp-o4-Zci"/>
+                        <outlet property="searchBar" destination="gEX-kh-ZNn" id="ohv-bK-yzh"/>
+                        <outlet property="tableView" destination="7NI-td-ebN" id="JA9-84-SaI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wa7-hS-bD4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
