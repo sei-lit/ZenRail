@@ -19,7 +19,10 @@ class SelectBGMViewController: UIViewController {
         "曇った宝石",
         "青空空港",
         "Cecilia",
-        "painted from memory"
+        "painted from memory",
+        "川のせせらぎ",
+        "小鳥のさえずり",
+        "さざなみ"
     ]
     
     weak var bgmDelegate: BGMDelegate?

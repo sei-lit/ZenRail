@@ -29,7 +29,10 @@ class BGMCell: UITableViewCell {
         "曇った宝石" : "fog_up_gem",
         "青空空港" : "blue_sky_airport",
         "Cecilia" : "cecilia",
-        "painted from memory" : "painted_from_memory"
+        "painted from memory" : "painted_from_memory",
+        "川のせせらぎ" : "bird_river",
+        "小鳥のさえずり" : "bird",
+        "さざなみ" : "wave"
     ]
     
     override func awakeFromNib() {
