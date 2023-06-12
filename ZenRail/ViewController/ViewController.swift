@@ -20,13 +20,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let BlurEffect = UIBlurEffect(style: UIBlurEffect.Style.systemUltraThinMaterialLight)
-        let blurEffectView = UIVisualEffectView(effect: BlurEffect)
-        blurEffectView.frame = titleLabel.frame
-        blurEffectView.layer.cornerRadius = 12
-        blurEffectView.alpha = 0.75
-        blurEffectView.clipsToBounds = true
-        backgroundImageView.addSubview(blurEffectView)
+//        let BlurEffect = UIBlurEffect(style: UIBlurEffect.Style.systemUltraThinMaterialLight)
+//        let blurEffectView = UIVisualEffectView(effect: BlurEffect)
+//        blurEffectView.frame = titleLabel.frame
+//        blurEffectView.center = titleLabel.center
+//        blurEffectView.layer.cornerRadius = 12
+//        blurEffectView.alpha = 0.75
+//        blurEffectView.clipsToBounds = true
+//        backgroundImageView.addSubview(blurEffectView)
         
         titleLabel.clipsToBounds = true
         titleLabel.layer.masksToBounds = true

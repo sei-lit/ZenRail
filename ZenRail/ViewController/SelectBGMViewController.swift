@@ -50,7 +50,6 @@ class SelectBGMViewController: UIViewController {
         if let presentationController = presentationController {
             presentationController.delegate?.presentationControllerDidDismiss?(presentationController)
         }
-        print("dismiss")
         self.dismiss(animated: true,completion: nil)
     }
 
@@ -74,18 +73,3 @@ extension SelectBGMViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//extension SelectBGMViewController: bgmCellDelegate {
-//    func pauseImage() {
-//        let bgmTableViewCell = UINib(nibName: "BGMCell", bundle: nil) as! BGMCell
-//        bgmTableViewCell.playButton.setImage(UIImage(systemName: "pause.circle"), for: .normal)
-//    }
-//
-//    func playImage() {
-//        let bgmTableViewCell = UINib(nibName: "BGMCell", bundle: nil) as! BGMCell
-//        bgmTableViewCell.playButton.setImage(UIImage(systemName: "play.circle"), for: .normal)
-//    }
-//
-//    func swapBgm() {
-//        print("swapBgm")
-//    }
-//}

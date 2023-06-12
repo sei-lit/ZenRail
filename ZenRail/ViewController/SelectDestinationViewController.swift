@@ -17,12 +17,11 @@ class SelectDestinationViewController: UIViewController {
     
     var locationManager: CLLocationManager!
     var didStartUpdatingLocation: Bool = false
-    var destination: String = ""
     var searchCompleter = MKLocalSearchCompleter()
-    var currentLocation: CLLocationCoordinate2D?
-    let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-
     
+    weak var destinationDelegate: DestinationDelegate?
+    
+    let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     let pointOfInterestFilter = MKPointOfInterestFilter(including: [.publicTransport])
     
     override func viewDidLoad() {
@@ -47,17 +46,6 @@ class SelectDestinationViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         initLocation(locationManager)
-        
-        
-    }
-    
-    func getStationData() {
-        let baseUrl = "https://express.heartrails.com/api/json?method=getStations"
-        var stationName = searchBar.text
-        
-        
-        
-        let stationUrl = "&name=" + stationName!
     }
     
     func initLocation(_ manager: CLLocationManager) {
@@ -106,7 +94,7 @@ class SelectDestinationViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func updateMap(currentLocation: CLLocation){
+    func updateLocation(currentLocation: CLLocation){
         print("Location:\(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
 
         let region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude), span: span)
@@ -115,6 +103,9 @@ class SelectDestinationViewController: UIViewController {
     }
     
     @IBAction func tappedBackButton() {
+        if let presentationController = presentationController {
+            presentationController.delegate?.presentationControllerDidDismiss?(presentationController)
+        }
         dismiss(animated: true)
     }
     
@@ -124,7 +115,7 @@ extension SelectDestinationViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
            if let location = locations.first {
                locationManager.stopUpdatingLocation()
-               updateMap(currentLocation: location)
+               updateLocation(currentLocation: location)
            }
        }
 
@@ -182,6 +173,20 @@ extension SelectDestinationViewController: UITableViewDelegate, UITableViewDataS
         cell.destinationLabel.text = completion.title
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        destinationDelegate?.getDestination(destination: searchCompleter.results[indexPath.row].title)
+        
+        let alert = UIAlertController(title: "降車駅を\(searchCompleter.results[indexPath.row].title)に設定しました", message: "瞑想を始めましょう！", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: { _ in
+            if let presentationController = self.presentationController {
+                presentationController.delegate?.presentationControllerDidDismiss?(presentationController)
+            }
+            self.dismiss(animated: true)
+        })
+        alert.addAction(ok)
+        present(alert, animated: true)
     }
     
     

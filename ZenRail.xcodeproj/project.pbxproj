@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		89295A422A3359F7000B92CB /* DestinationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295A402A3359F7000B92CB /* DestinationTableViewCell.swift */; };
 		89295A432A3359F7000B92CB /* DestinationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89295A412A3359F7000B92CB /* DestinationTableViewCell.xib */; };
+		89295A452A36CE89000B92CB /* DestinationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89295A442A36CE89000B92CB /* DestinationDelegate.swift */; };
 		892EFEFD2A1E058D00D5E811 /* ToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EFEFC2A1E058D00D5E811 /* ToDoViewController.swift */; };
 		892EFEFF2A1E05A300D5E811 /* MeditationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EFEFE2A1E05A300D5E811 /* MeditationViewController.swift */; };
 		892EFF012A1E076200D5E811 /* SelectBGMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892EFF002A1E076200D5E811 /* SelectBGMViewController.swift */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		89295A402A3359F7000B92CB /* DestinationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationTableViewCell.swift; sourceTree = "<group>"; };
 		89295A412A3359F7000B92CB /* DestinationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DestinationTableViewCell.xib; sourceTree = "<group>"; };
+		89295A442A36CE89000B92CB /* DestinationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationDelegate.swift; sourceTree = "<group>"; };
 		892EFEFC2A1E058D00D5E811 /* ToDoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoViewController.swift; sourceTree = "<group>"; };
 		892EFEFE2A1E05A300D5E811 /* MeditationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationViewController.swift; sourceTree = "<group>"; };
 		892EFF002A1E076200D5E811 /* SelectBGMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBGMViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			children = (
 				892EFF132A25DD9600D5E811 /* BGMDelegate.swift */,
 				892EFF262A2893E000D5E811 /* ToDoDelegate.swift */,
+				89295A442A36CE89000B92CB /* DestinationDelegate.swift */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				892EFEFD2A1E058D00D5E811 /* ToDoViewController.swift in Sources */,
+				89295A452A36CE89000B92CB /* DestinationDelegate.swift in Sources */,
 				892EFF032A1E077A00D5E811 /* SelectDestinationViewController.swift in Sources */,
 				892EFF0B2A1F48AF00D5E811 /* AddToDoViewController.swift in Sources */,
 				892EFF012A1E076200D5E811 /* SelectBGMViewController.swift in Sources */,

@@ -22,7 +22,7 @@
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="瞑想へようこそ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wse-fK-Kzp">
                                 <rect key="frame" x="46.666666666666657" y="159" width="300" height="70"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="1" alpha="0.8032388245033113" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="RkA-1Q-0IN"/>
                                     <constraint firstAttribute="width" constant="300" id="ujq-qc-5vA"/>
@@ -239,7 +239,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="降車駅を選択…"/>
                                                 <connections>
-                                                    <segue destination="0Rk-kI-WSq" kind="presentation" id="VgL-q9-13g"/>
+                                                    <action selector="tappedSetDestinationButton" destination="7co-fo-h1h" eventType="touchUpInside" id="bPV-L5-ffO"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -315,6 +315,7 @@
                         <outlet property="pageView" destination="EJa-XY-6wX" id="e5o-P3-N9w"/>
                         <outlet property="progressView" destination="VLw-Wu-645" id="hu4-Gy-0eT"/>
                         <outlet property="scrollView" destination="TdV-aw-peI" id="12A-6Z-XST"/>
+                        <outlet property="setDestinationButton" destination="pVc-oS-Koq" id="5UI-p0-NJY"/>
                         <outlet property="stepLabel" destination="Hz2-73-Vt9" id="Pkf-Aq-V3g"/>
                     </connections>
                 </viewController>
@@ -322,10 +323,10 @@
             </objects>
             <point key="canvasLocation" x="46.564885496183201" y="777.46478873239437"/>
         </scene>
-        <!--SelectBGM View Controller-->
+        <!--SelectBGMViewController-->
         <scene sceneID="uCy-e2-3lc">
             <objects>
-                <viewController storyboardIdentifier="SelectBGMViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LLR-PL-Fao" customClass="SelectBGMViewController" customModule="ZenRail" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SelectBGMViewController" title="SelectBGMViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LLR-PL-Fao" customClass="SelectBGMViewController" customModule="ZenRail" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3lZ-1c-x9e">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -380,16 +381,16 @@
             </objects>
             <point key="canvasLocation" x="-582.44274809160299" y="1608.4507042253522"/>
         </scene>
-        <!--Select Destination View Controller-->
+        <!--SelectDestinationViewController-->
         <scene sceneID="cK4-rE-0cB">
             <objects>
-                <viewController id="0Rk-kI-WSq" customClass="SelectDestinationViewController" customModule="ZenRail" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SelectDestinationViewController" title="SelectDestinationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0Rk-kI-WSq" customClass="SelectDestinationViewController" customModule="ZenRail" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="81k-rx-BbW">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fyh-L1-a6T">
-                                <rect key="frame" x="20" y="20" width="30" height="30"/>
+                                <rect key="frame" x="20" y="79" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="dKf-qx-cse"/>
                                     <constraint firstAttribute="height" constant="30" id="oee-hl-D17"/>
@@ -406,24 +407,24 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="降車駅を選択" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jzq-4s-W3H">
-                                <rect key="frame" x="111.33333333333333" y="100" width="170.33333333333337" height="33.666666666666657"/>
+                                <rect key="frame" x="111.33333333333333" y="159" width="170.33333333333337" height="33.666666666666657"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7NI-td-ebN">
-                                <rect key="frame" x="30" y="270.66666666666669" width="333" height="521.33333333333326"/>
+                                <rect key="frame" x="30" y="329.66666666666674" width="333" height="438.33333333333326"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="gEX-kh-ZNn">
-                                <rect key="frame" x="0.0" y="153.66666666666666" width="393" height="56"/>
+                                <rect key="frame" x="0.0" y="212.66666666666666" width="393" height="55.999999999999972"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="0Rk-kI-WSq" id="FM8-Sx-bq2"/>
                                 </connections>
                             </searchBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="検索結果" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKh-1M-u7n">
-                                <rect key="frame" x="30" y="229.66666666666666" width="70" height="21"/>
+                                <rect key="frame" x="30" y="288.66666666666669" width="70" height="21"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

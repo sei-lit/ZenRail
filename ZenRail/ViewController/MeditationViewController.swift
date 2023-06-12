@@ -7,6 +7,8 @@
 
 import UIKit
 import AVFoundation
+import MapKit
+import AudioToolbox
 
 var soundPlayer: AVAudioPlayer!
 
@@ -15,6 +17,7 @@ class MeditationViewController: UIViewController {
     
     @IBOutlet var backwardButton: UIButton!
     @IBOutlet var forwardButton: UIButton!
+    @IBOutlet var setDestinationButton: UIButton!
     @IBOutlet var stepLabel: UILabel!
     @IBOutlet var headlineLabel: UILabel!
     @IBOutlet var bgmLabel: UILabel!
@@ -29,6 +32,15 @@ class MeditationViewController: UIViewController {
     var index: Int = 0
     var views: [UIView] = []
     var playingBgm: String!
+    
+    var locationManager: CLLocationManager!
+    var didStartUpdatingLocation: Bool = false
+    
+    var locationDictionary: [String : Any]? {
+        didSet {
+            print(self.locationDictionary)
+        }
+    }
     
     let headlines = [
         "心地よい姿勢を取る",
@@ -79,9 +91,13 @@ class MeditationViewController: UIViewController {
         
         createIndicaterView()
         indicater()
+        setupCoreLocation()
     }
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        initLocation(locationManager)
+    }
     
     @IBAction func tappedForwardButton() {
         index += 1
@@ -122,6 +138,15 @@ class MeditationViewController: UIViewController {
         present(selectBGMViewController, animated: true, completion: nil)
     }
     
+    @IBAction func tappedSetDestinationButton() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let selectDestinationViewController = storyboard.instantiateViewController(withIdentifier: "SelectDestinationViewController") as! SelectDestinationViewController
+        selectDestinationViewController.modalPresentationStyle = .formSheet
+        selectDestinationViewController.presentationController?.delegate = self
+        selectDestinationViewController.destinationDelegate = self
+        present(selectDestinationViewController, animated: true, completion: nil)
+    }
+    
     func createIndicaterView() {
         let pageViewCenterX = CGFloat((scrollView.frame.width) / 2)
         let pageViewCenterY = CGFloat(pageView.frame.minY)
@@ -145,6 +170,133 @@ class MeditationViewController: UIViewController {
                 views[i].backgroundColor = UIColor(hex: "FFFFFF")
             }
         }
+    }
+    
+    //MARK: CoreLocation
+    
+    func initLocation(_ manager: CLLocationManager) {
+        let status = manager.authorizationStatus
+        
+        switch status {
+        case .notDetermined:
+            //ユーザーが位置情報の許可をまだしていないので、位置情報許可のダイアログを表示する
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            showPermissionAlert()
+        case .authorizedAlways, .authorizedWhenInUse:
+            if !didStartUpdatingLocation{
+                didStartUpdatingLocation = true
+                locationManager.startUpdatingLocation()
+            }
+        @unknown default:
+            break
+        }
+        
+    }
+    
+    func setupCoreLocation() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+    }
+    
+    func showPermissionAlert(){
+        //位置情報が制限されている/拒否されている
+        let alert = UIAlertController(title: "位置情報の取得", message: "設定アプリから位置情報の使用を許可して下さい。プライバシー>位置情報サービス>ZenRailから変更できます", preferredStyle: .alert)
+        let goToSetting = UIAlertAction(title: "設定アプリを開く", style: .default) { _ in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: nil)
+            }
+        }
+        let cancelAction = UIAlertAction(title: NSLocalizedString("キャンセル", comment: ""), style: .cancel) { (_) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(goToSetting)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func updateLocation(currentLocation: CLLocation) -> Bool {
+        print("Location:\(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
+        
+        guard let stationlatitude = locationDictionary?["latitude"] as? Double else {
+            print("locationDictionary?[x]: ", locationDictionary?["latitude"])
+            print("locationDictionary?[x]: ", type(of: locationDictionary?["latitude"]))
+            return false
+        }
+        
+        guard let stationlongitude = locationDictionary?["longitude"] as? Double else {
+            print("locationDictionary?[y] is nil")
+            return false
+        }
+        
+        let distance = calculateDistance(y1: Double(currentLocation.coordinate.latitude), x1: Double(currentLocation.coordinate.longitude), y2: stationlatitude , x2: stationlongitude)
+        
+        if distance <= 1.00000 {
+            return true
+        } else {
+            return false
+        }
+        
+    }
+    
+    func calculateDistance(y1: Double, x1: Double, y2: Double, x2: Double) -> Double {
+        
+        print(y1, x1, y2, x2)
+        
+        let r = 6378.137
+        let deltaX = x2 - x1
+        let cos = acos(
+            (sin((y1 * Double.pi) / 180) * sin((y2 * Double.pi) / 180)) + (cos((y1 * Double.pi) / 180) * cos((y2 * Double.pi) / 180) * cos((deltaX * Double.pi) / 180))
+        )
+        let distance = r * cos
+        
+        print(distance)
+        return distance
+    }
+    
+    //MARK: API
+    func setupApi(station: String) {
+        let baseUrl = "https://express.heartrails.com/api/json?method=getStations&name="
+        ///remove "駅"
+        let stationName = String(station.prefix(station.count - 1))
+        guard let stationEncodeString = stationName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else {
+            print("URL encode is failed")
+            return
+        }
+        guard let apiUrl = URL(string: baseUrl + stationEncodeString) else {
+            print("apiUrl is invalid", baseUrl + stationEncodeString)
+            return
+        }
+        print("apiUrl: ", apiUrl)
+                
+        let task: URLSessionTask = URLSession.shared.dataTask(with: apiUrl, completionHandler: {data, response, error in
+            do {
+                guard let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as? [String : Any] else {
+                    print("json is nil")
+                    return
+                }
+                ///cast json to dictionary
+                let responseJson = json["response"] as? [String : Any]
+                let stationJson = responseJson?["station"] as? [Any]
+                let stationDictionary = stationJson?[0] as? [String : Any]
+                let locationDictionary = [
+                    "latitude" : stationDictionary?["y"],
+                    "longitude" : stationDictionary?["x"]
+                ] as? [String : Any]
+                DispatchQueue.main.async() { () -> Void in
+                    self.locationDictionary = locationDictionary
+                }
+            }
+            catch {
+                print(error)
+            }
+        })
+        task.resume()
     }
     
     func setupBGM() {
@@ -179,17 +331,63 @@ class MeditationViewController: UIViewController {
     }
 }
 
+//MARK: CLLocationManagerDelegate
+extension MeditationViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+           if let location = locations.first {
+               if updateLocation(currentLocation: location) {
+                   print("getting close destination")
+                   AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                   let alert = UIAlertController(title: "もうすぐ降車駅に到着します", message: "心のリフレッシュはできましたか？", preferredStyle: .alert)
+                   let ok = UIAlertAction(title: "ok", style: .default)
+                   alert.addAction(ok)
+                   present(alert, animated: true)
+               } else {
+                   print("not yet...")
+               }
+           }
+       }
+
+       func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+           print("Failed to find user's location: \(error.localizedDescription)")
+       }
+    
+    func locationManager(_ manager: CLLocationManager,
+                                     didChangeAuthorization status: CLAuthorizationStatus){
+           if status == .authorizedWhenInUse {
+               if !didStartUpdatingLocation{
+                   didStartUpdatingLocation = true
+                   locationManager.startUpdatingLocation()
+               }
+           } else if status == .restricted || status == .denied {
+               showPermissionAlert()
+           }
+       }
+}
+
 extension MeditationViewController: BGMDelegate {
     func gettingBgmTitle(title: String) {
-        print("gettingBgmTitle")
         self.playingBgm = title
-        print("playingBgm is " + playingBgm)
     }
+}
+
+extension MeditationViewController: DestinationDelegate {
+    func getDestination(destination: String) {
+        setDestinationButton.setTitle(destination, for: .normal)
+    }
+    
+    
 }
 
 extension MeditationViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        print("presentationControllerDidDismiss")
-        setupBGM()
+        switch presentationController.presentedViewController.title! {
+        case "SelectBGMViewController":
+            setupBGM()
+        case "SelectDestinationViewController":
+            setupApi(station: setDestinationButton.titleLabel?.text ?? "")
+        default:
+            break
+        }
     }
 }
