@@ -12,8 +12,8 @@ class ToDoViewController: UIViewController {
     @IBOutlet var toDoTableView: UITableView!
     
     var tasks: [[String]] = [
-        ["コア機能開発", "レポート"],
-        ["洗濯物干し", "トイレ掃除"]
+        [],
+        []
     ]
     
     var toDoDelegate: ToDoDelegate?

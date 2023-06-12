@@ -221,16 +221,15 @@ class MeditationViewController: UIViewController {
     }
     
     func updateLocation(currentLocation: CLLocation) -> Bool {
-        print("Location:\(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
-        
+//        print("Location:\(currentLocation.coordinate.latitude), \(currentLocation.coordinate.longitude)")
+//
         guard let stationlatitude = locationDictionary?["latitude"] as? Double else {
-            print("locationDictionary?[x]: ", locationDictionary?["latitude"])
-            print("locationDictionary?[x]: ", type(of: locationDictionary?["latitude"]))
+            print("locationDictionary?[y] is nil")
             return false
         }
         
         guard let stationlongitude = locationDictionary?["longitude"] as? Double else {
-            print("locationDictionary?[y] is nil")
+            print("locationDictionary?[x] is nil")
             return false
         }
         
@@ -255,7 +254,6 @@ class MeditationViewController: UIViewController {
         )
         let distance = r * cos
         
-        print(distance)
         return distance
     }
     
@@ -272,7 +270,6 @@ class MeditationViewController: UIViewController {
             print("apiUrl is invalid", baseUrl + stationEncodeString)
             return
         }
-        print("apiUrl: ", apiUrl)
                 
         let task: URLSessionTask = URLSession.shared.dataTask(with: apiUrl, completionHandler: {data, response, error in
             do {
@@ -300,9 +297,7 @@ class MeditationViewController: UIViewController {
     }
     
     func setupBGM() {
-        
-        print("setupBGM")
-        
+                
         guard let player = soundPlayer else {
             print("soundPlayer is nil")
             return
@@ -339,7 +334,9 @@ extension MeditationViewController: CLLocationManagerDelegate {
                    print("getting close destination")
                    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
                    let alert = UIAlertController(title: "もうすぐ降車駅に到着します", message: "心のリフレッシュはできましたか？", preferredStyle: .alert)
-                   let ok = UIAlertAction(title: "ok", style: .default)
+                   let ok = UIAlertAction(title: "OK", style: .default, handler: { _ in 
+                       self.dismiss(animated: true)
+                   })
                    alert.addAction(ok)
                    present(alert, animated: true)
                } else {
